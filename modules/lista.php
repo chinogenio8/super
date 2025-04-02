@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once '../config/config.php';
 verificarSesion();
 
 $error = '';
@@ -11,7 +11,7 @@ $familia_actual = obtenerFamiliaUsuario($usuario_id);
 
 // Si el usuario no pertenece a ninguna familia, redirigir a la página de familias
 if (!$familia_actual) {
-    header("Location: familias.php");
+    header("Location: ../modules/familias.php");
     exit();
 }
 
@@ -120,15 +120,16 @@ while ($row = mysqli_fetch_assoc($resultado)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Compras - <?php echo htmlspecialchars($familia_actual['nombre']); ?></title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="../assets/icono_carrito.png">
 </head>
 <body>
     <div class="container">
         <header class="app-header">
             <h1>Lista de Compras: <?php echo htmlspecialchars($familia_actual['nombre']); ?></h1>
             <nav>
-                <a href="familias.php" class="btn">Gestionar Familia</a>
-                <a href="logout.php" class="btn logout">Cerrar Sesión</a>
+                <a href="../modules/familias.php" class="btn">Gestionar Familia</a>
+                <a href="../auth/logout.php" class="btn logout">Cerrar Sesión</a>
             </nav>
         </header>
         
@@ -144,7 +145,7 @@ while ($row = mysqli_fetch_assoc($resultado)) {
             <div class="agregar-producto">
                 <h2>Agregar Producto</h2>
                 
-                <form method="POST" action="lista.php" class="form-inline">
+                <form method="POST" action="" class="form-inline">
                     <div class="form-group">
                         <label for="nombre_producto">Nombre:</label>
                         <input type="text" id="nombre_producto" name="nombre_producto" required>
@@ -162,9 +163,9 @@ while ($row = mysqli_fetch_assoc($resultado)) {
             </div>
             
             <div class="filtros">
-                <a href="lista.php?filtro=todos" class="btn <?php echo $filtro === 'todos' ? 'active' : ''; ?>">Todos</a>
-                <a href="lista.php?filtro=pendientes" class="btn <?php echo $filtro === 'pendientes' ? 'active' : ''; ?>">Pendientes</a>
-                <a href="lista.php?filtro=comprados" class="btn <?php echo $filtro === 'comprados' ? 'active' : ''; ?>">Comprados</a>
+                <a href="../modules/lista.php?filtro=todos" class="btn <?php echo $filtro === 'todos' ? 'active' : ''; ?>">Todos</a>
+                <a href="../modules/lista.php?filtro=pendientes" class="btn <?php echo $filtro === 'pendientes' ? 'active' : ''; ?>">Pendientes</a>
+                <a href="../modules/lista.php?filtro=comprados" class="btn <?php echo $filtro === 'comprados' ? 'active' : ''; ?>">Comprados</a>
             </div>
             
             <div class="productos-lista">
@@ -189,9 +190,9 @@ while ($row = mysqli_fetch_assoc($resultado)) {
                                 <tr class="<?php echo $producto['comprado'] ? 'comprado' : ''; ?>">
                                     <td>
                                         <?php if ($producto['comprado']): ?>
-                                            <a href="lista.php?marcar=<?php echo $producto['id']; ?>&estado=0" class="estado-link">✅</a>
+                                            <a href="../modules/lista.php?marcar=<?php echo $producto['id']; ?>&estado=0" class="estado-link">✅</a>
                                         <?php else: ?>
-                                            <a href="lista.php?marcar=<?php echo $producto['id']; ?>&estado=1" class="estado-link">⬜</a>
+                                            <a href="../modules/lista.php?marcar=<?php echo $producto['id']; ?>&estado=1" class="estado-link">⬜</a>
                                         <?php endif; ?>
                                     </td>
                                     <td><?php echo htmlspecialchars($producto['nombre']); ?></td>
@@ -199,7 +200,7 @@ while ($row = mysqli_fetch_assoc($resultado)) {
                                     <td><?php echo htmlspecialchars($producto['agregado_por']); ?></td>
                                     <td><?php echo date('d/m/Y H:i', strtotime($producto['fecha_creacion'])); ?></td>
                                     <td>
-                                        <a href="lista.php?eliminar=<?php echo $producto['id']; ?>" class="btn small danger" onclick="return confirm('¿Estás seguro de querer eliminar este producto?')">Eliminar</a>
+                                        <a href="../modules/lista.php?eliminar=<?php echo $producto['id']; ?>" class="btn small danger" onclick="return confirm('¿Estás seguro de querer eliminar este producto?')">Eliminar</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

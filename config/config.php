@@ -24,7 +24,7 @@ function limpiarDato($dato) {
 // Función para verificar si el usuario ha iniciado sesión
 function verificarSesion() {
     if (!isset($_SESSION['usuario_id'])) {
-        header("Location: login.php");
+        header("Location: ../auth/login.php");
         exit();
     }
 }

@@ -233,7 +233,9 @@
   .form-inline .form-actions {
     flex: 0 0 auto;
   }
-  
+  .links a:hover {
+    color: var(--primary-dark);
+  }
   /* Enlaces */
   a {
     color: var(--primary);
@@ -242,7 +244,7 @@
   }
   
   a:hover {
-    color: var(--primary-dark);
+    color: var(--light);
   }
   
   /* Título y secciones */

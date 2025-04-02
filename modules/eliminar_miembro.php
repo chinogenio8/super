@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once '../config/config.php';
 verificarSesion();
 
 $error = '';
@@ -8,7 +8,7 @@ $usuario_id = $_SESSION['usuario_id'];
 
 // Verificar parámetros
 if (!isset($_GET['id']) || !isset($_GET['familia']) || !is_numeric($_GET['id']) || !is_numeric($_GET['familia'])) {
-    header("Location: familias.php");
+    header("Location: ../modules/familias.php");
     exit();
 }
 
@@ -17,13 +17,13 @@ $familia_id = $_GET['familia'];
 
 // Verificar que el usuario actual es administrador de la familia
 if (!esAdministrador($usuario_id, $familia_id)) {
-    header("Location: familias.php");
+    header("Location: ../modules/familias.php");
     exit();
 }
 
 // No permitir eliminar a sí mismo
 if ($miembro_id == $usuario_id) {
-    header("Location: familias.php");
+    header("Location: ../modules/familias.php");
     exit();
 }
 
@@ -37,7 +37,7 @@ mysqli_stmt_execute($stmt);
 $resultado = mysqli_stmt_get_result($stmt);
 
 if (mysqli_num_rows($resultado) == 0) {
-    header("Location: familias.php");
+    header("Location: ../modules/familias.php");
     exit();
 }
 
@@ -67,7 +67,7 @@ if (isset($_GET['admin']) && ($_GET['admin'] == 0 || $_GET['admin'] == 1)) {
             if (mysqli_stmt_execute($stmt)) {
                 $success = 'Rol actualizado exitosamente.';
                 // Redirigir después de 2 segundos
-                header("refresh:2;url=familias.php");
+                header("refresh:2;url=../modules/familias.php");
             } else {
                 $error = 'Error al actualizar el rol: ' . mysqli_error($conn);
             }
@@ -81,7 +81,7 @@ if (isset($_GET['admin']) && ($_GET['admin'] == 0 || $_GET['admin'] == 1)) {
         if (mysqli_stmt_execute($stmt)) {
             $success = 'Rol actualizado exitosamente.';
             // Redirigir después de 2 segundos
-            header("refresh:2;url=familias.php");
+            header("refresh:2;url=../modules/familias.php");
         } else {
             $error = 'Error al actualizar el rol: ' . mysqli_error($conn);
         }
@@ -95,7 +95,7 @@ if (isset($_GET['admin']) && ($_GET['admin'] == 0 || $_GET['admin'] == 1)) {
     if (mysqli_stmt_execute($stmt)) {
         $success = 'Miembro eliminado exitosamente.';
         // Redirigir después de 2 segundos
-        header("refresh:2;url=familias.php");
+        header("refresh:2;url=../modules/familias.php");
     } else {
         $error = 'Error al eliminar el miembro: ' . mysqli_error($conn);
     }
@@ -108,14 +108,15 @@ if (isset($_GET['admin']) && ($_GET['admin'] == 0 || $_GET['admin'] == 1)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eliminar Miembro - Lista de Compras Familiar</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="../assets/icono_carrito.png">
 </head>
 <body>
     <div class="container">
         <header class="app-header">
             <h1>Eliminar Miembro</h1>
             <nav>
-                <a href="familias.php" class="btn">Volver a Familia</a>
+                <a href="../modules/familias.php" class="btn">Volver a Familia</a>
             </nav>
         </header>
         

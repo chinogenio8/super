@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once '../config/config.php';
 
 $error = '';
 $success = '';
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (mysqli_stmt_execute($stmt)) {
                 $success = 'Registro exitoso. Ahora puedes iniciar sesión.';
                 // Redirigir después de 2 segundos
-                header("refresh:2;url=login.php");
+                header("refresh:2;url=../auth/login.php");
             } else {
                 $error = 'Error al registrar el usuario: ' . mysqli_error($conn);
             }
@@ -56,7 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro - Lista de Compras Familiar</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="../assets/icono_carrito.png">
 </head>
 <body>
     <div class="container">
@@ -70,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="alert success"><?php echo $success; ?></div>
         <?php endif; ?>
         
-        <form method="POST" action="register.php">
+        <form method="POST" action="../modules/register.php">
             <div class="form-group">
                 <label for="nombre">Nombre completo:</label>
                 <input type="text" id="nombre" name="nombre" required>
@@ -97,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
         
         <div class="links">
-            <p>¿Ya tienes cuenta? <a href="login.php">Iniciar sesión</a></p>
+            <p>¿Ya tienes cuenta? <a href="../auth/login.php">Iniciar sesión</a></p>
         </div>
     </div>
 </body>

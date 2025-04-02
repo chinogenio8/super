@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once '../config/config.php';
 
 $error = '';
 
@@ -31,10 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 if ($familia) {
                     // Si tiene familia, redirigir a la lista de compras
-                    header("Location: lista.php");
+                    header("Location: ../modules/lista.php");
                 } else {
                     // Si no tiene familia, redirigir a la página de familias
-                    header("Location: familias.php");
+                    header("Location: ../modules/familias.php");
                 }
                 exit();
             } else {
@@ -53,7 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión - Lista de Compras Familiar</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="../assets/icono_carrito.png">
 </head>
 <body>
     <div class="container">
@@ -63,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="alert error"><?php echo $error; ?></div>
         <?php endif; ?>
         
-        <form method="POST" action="login.php">
+        <form method="POST" action="../auth/login.php">
             <div class="form-group">
                 <label for="email">Correo electrónico:</label>
                 <input type="email" id="email" name="email" required>
@@ -80,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
         
         <div class="links">
-            <p>¿No tienes cuenta? <a href="register.php">Registrarse</a></p>
+            <p>¿No tienes cuenta? <a href="../modules/register.php">Registrarse</a></p>
         </div>
     </div>
 </body>

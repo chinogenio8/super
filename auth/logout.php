@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once '../config/config.php';
 
 // Destruir todas las variables de sesión
 $_SESSION = array();
@@ -17,6 +17,6 @@ if (ini_get("session.use_cookies")) {
 session_destroy();
 
 // Redirigir a la página de inicio de sesión
-header("Location: login.php");
+header("Location: ../auth/login.php");
 exit();
 ?>

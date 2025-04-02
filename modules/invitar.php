@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once '../config/config.php';
 verificarSesion();
 
 $error = '';
@@ -11,13 +11,13 @@ $familia_actual = obtenerFamiliaUsuario($usuario_id);
 
 // Si el usuario no pertenece a ninguna familia, redirigir a la página de familias
 if (!$familia_actual) {
-    header("Location: familias.php");
+    header("Location: ../modules/familias.php");
     exit();
 }
 
 // Verificar si el usuario es administrador
 if (!esAdministrador($usuario_id, $familia_actual['id'])) {
-    header("Location: familias.php");
+    header("Location: ../modules/familias.php");
     exit();
 }
 
@@ -107,7 +107,7 @@ if (isset($_GET['eliminar']) && is_numeric($_GET['eliminar'])) {
         if (mysqli_stmt_execute($stmt)) {
             $success = 'Invitación eliminada exitosamente.';
             // Recargar la página para actualizar la lista de invitaciones
-            header("Location: invitar.php");
+            header("Location: ../modules/invitar.php");
             exit();
         } else {
             $error = 'Error al eliminar la invitación: ' . mysqli_error($conn);
@@ -124,16 +124,17 @@ if (isset($_GET['eliminar']) && is_numeric($_GET['eliminar'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invitar Miembros - <?php echo htmlspecialchars($familia_actual['nombre']); ?></title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="../assets/icono_carrito.png">
 </head>
 <body>
     <div class="container">
         <header class="app-header">
             <h1>Invitar Miembros: <?php echo htmlspecialchars($familia_actual['nombre']); ?></h1>
             <nav>
-                <a href="familias.php" class="btn">Volver a Familia</a>
-                <a href="lista.php" class="btn">Ver Lista de Compras</a>
-                <a href="logout.php" class="btn logout">Cerrar Sesión</a>
+                <a href="../modules/familias.php" class="btn">Volver a Familia</a>
+                <a href="../modules/lista.php" class="btn">Ver Lista de Compras</a>
+                <a href="../auth/logout.php" class="btn logout">Cerrar Sesión</a>
             </nav>
         </header>
         
@@ -162,7 +163,7 @@ if (isset($_GET['eliminar']) && is_numeric($_GET['eliminar'])) {
             <div class="nueva-invitacion">
                 <h2>Enviar Nueva Invitación</h2>
                 
-                <form method="POST" action="invitar.php">
+                <form method="POST" action="../modules/invitar.php">
                     <div class="form-group">
                         <label for="email">Correo electrónico:</label>
                         <input type="email" id="email" name="email" required>
@@ -201,7 +202,7 @@ if (isset($_GET['eliminar']) && is_numeric($_GET['eliminar'])) {
                                         <input type="text" value="<?php echo htmlspecialchars($enlace); ?>" readonly onclick="this.select();" class="enlace-input">
                                     </td>
                                     <td>
-                                        <a href="invitar.php?eliminar=<?php echo $invitacion['id']; ?>" class="btn small danger" onclick="return confirm('¿Estás seguro de querer eliminar esta invitación?')">Eliminar</a>
+                                        <a href="../modules/invitar.php?eliminar=<?php echo $invitacion['id']; ?>" class="btn small danger" onclick="return confirm('¿Estás seguro de querer eliminar esta invitación?')">Eliminar</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

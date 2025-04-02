@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once '../config/config.php';
 verificarSesion();
 
 $error = '';
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crear_familia'])) {
             
             $success = 'Familia creada exitosamente.';
             // Redirigir a la lista de compras
-            header("refresh:1;url=lista.php");
+            header("refresh:1;url=../modules/lista.php");
         } catch (Exception $e) {
             // Revertir transacción en caso de error
             mysqli_rollback($conn);
@@ -89,8 +89,8 @@ if (isset($_GET['salir']) && is_numeric($_GET['salir'])) {
                 } else {
                     // Mostrar confirmación
                     $mensaje_confirmacion = 'Eres el último administrador. ¿Quieres eliminar la familia por completo? 
-                                           <a href="familias.php?salir=' . $familia_id . '&confirmar=1" class="btn danger">Sí, eliminar</a> 
-                                           <a href="familias.php" class="btn">Cancelar</a>';
+                                           <a href="../modules/familias.php?salir=' . $familia_id . '&confirmar=1" class="btn danger">Sí, eliminar</a> 
+                                           <a href="../modules/familias.php" class="btn">Cancelar</a>';
                 }
             } else {
                 // Eliminar solo al miembro
@@ -163,7 +163,7 @@ if (isset($_GET['token'])) {
                     
                     $success = 'Has sido agregado a la familia.';
                     // Redirigir a la lista de compras
-                    header("refresh:1;url=lista.php");
+                    header("refresh:1;url=../modules/lista.php");
                 } else {
                     $error = 'Error al unirse a la familia: ' . mysqli_error($conn);
                 }
@@ -205,7 +205,8 @@ if ($familia_actual) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Familias - Lista de Compras Familiar</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="../assets/icono_carrito.png">
 </head>
 <body>
     <div class="container">
@@ -213,9 +214,9 @@ if ($familia_actual) {
             <h1>Gestión de Familias</h1>
             <nav>
                 <?php if ($familia_actual): ?>
-                    <a href="lista.php" class="btn">Ver Lista de Compras</a>
+                    <a href="../modules/lista.php" class="btn">Ver Lista de Compras</a>
                 <?php endif; ?>
-                <a href="logout.php" class="btn logout">Cerrar Sesión</a>
+                <a href="../auth/logout.php" class="btn logout">Cerrar Sesión</a>
             </nav>
         </header>
         
@@ -236,10 +237,10 @@ if ($familia_actual) {
                 <h2>Familia: <?php echo htmlspecialchars($familia_actual['nombre']); ?></h2>
                 
                 <?php if ($es_admin): ?>
-                    <a href="invitar.php" class="btn primary">Invitar Miembros</a>
+                    <a href="../modules/invitar.php" class="btn primary">Invitar Miembros</a>
                 <?php endif; ?>
                 
-                <a href="familias.php?salir=<?php echo $familia_actual['id']; ?>" class="btn danger" onclick="return confirm('¿Estás seguro de querer salir de esta familia?')">Salir de la Familia</a>
+                <a href="../modules/familias.php?salir=<?php echo $familia_actual['id']; ?>" class="btn danger" onclick="return confirm('¿Estás seguro de querer salir de esta familia?')">Salir de la Familia</a>
             </div>
             
             <div class="miembros-lista">
@@ -264,12 +265,12 @@ if ($familia_actual) {
                                 <td><?php echo $miembro['es_admin'] ? 'Administrador' : 'Miembro'; ?></td>
                                 <?php if ($es_admin && $miembro['id'] != $usuario_id): ?>
                                     <td>
-                                        <a href="eliminar_miembro.php?id=<?php echo $miembro['id']; ?>&familia=<?php echo $familia_actual['id']; ?>" class="btn small danger" onclick="return confirm('¿Estás seguro de querer eliminar a este miembro?')">Eliminar</a>
+                                        <a href="../modules/eliminar_miembro.php?id=<?php echo $miembro['id']; ?>&familia=<?php echo $familia_actual['id']; ?>" class="btn small danger" onclick="return confirm('¿Estás seguro de querer eliminar a este miembro?')">Eliminar</a>
                                         
                                         <?php if ($miembro['es_admin']): ?>
-                                            <a href="eliminar_miembro.php?id=<?php echo $miembro['id']; ?>&familia=<?php echo $familia_actual['id']; ?>&admin=0" class="btn small">Quitar Admin</a>
+                                            <a href="../modules/eliminar_miembro.php?id=<?php echo $miembro['id']; ?>&familia=<?php echo $familia_actual['id']; ?>&admin=0" class="btn small">Quitar Admin</a>
                                         <?php else: ?>
-                                            <a href="eliminar_miembro.php?id=<?php echo $miembro['id']; ?>&familia=<?php echo $familia_actual['id']; ?>&admin=1" class="btn small">Hacer Admin</a>
+                                            <a href="../modules/eliminar_miembro.php?id=<?php echo $miembro['id']; ?>&familia=<?php echo $familia_actual['id']; ?>&admin=1" class="btn small">Hacer Admin</a>
                                         <?php endif; ?>
                                     </td>
                                 <?php elseif ($es_admin): ?>
@@ -284,7 +285,7 @@ if ($familia_actual) {
             <div class="crear-familia">
                 <h2>Crear una Nueva Familia</h2>
                 
-                <form method="POST" action="familias.php">
+                <form method="POST" action="../modules/familias.php">
                     <div class="form-group">
                         <label for="nombre_familia">Nombre de la Familia:</label>
                         <input type="text" id="nombre_familia" name="nombre_familia" required>
